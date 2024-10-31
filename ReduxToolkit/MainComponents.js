@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, FlatList, ActivityIndicator, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, Button, FlatList, ActivityIndicator, StyleSheet, SafeAreaView, Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchData, addPost, updatePost, deletePost } from './apiSlice';
 import UserModal from './UserModal';
@@ -35,7 +35,21 @@ const MainComponent = () => {
   };
 
   const handleDelete = (id) => {
-    dispatch(deletePost(id));
+    Alert.alert(
+      "Xác nhận xóa",
+      "Bạn có chắc chắn muốn xóa mục này không?",
+      [
+        {
+          text: "Hủy",
+          style: "cancel"
+        },
+        {
+          text: "Xóa",
+          onPress: () => dispatch(deletePost(id)), // Nếu người dùng nhấn "Xóa"
+          style: "destructive"
+        }
+      ]
+    );
   };
 
   if (loading) {
